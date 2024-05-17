@@ -59,7 +59,7 @@ public class SubwayMap {
         SubwayMap subwayMap = new SubwayMap();
 
 
-        try (BufferedReader br = new BufferedReader(new FileReader("F:/subway.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("C:/Users/caoyicheng/Desktop/subway.txt/"))) {
             String line;
             String currentLine = null;
             while ((line = br.readLine()) != null) {
