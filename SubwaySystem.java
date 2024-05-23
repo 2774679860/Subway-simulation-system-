@@ -1,7 +1,9 @@
 package exersise4;
+import java.awt.GridLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import javax.swing.*;
 
 public class SubwaySystem {
     private Map<String, Map<String, Double>> graph = new HashMap<>();
@@ -41,43 +43,45 @@ public class SubwaySystem {
         graph.get(from).put(to, distance);
     }
 
-    public void displayMenu() {
-        while (true) {
-            System.out.println("\n武汉地铁模拟系统");
-            System.out.println("1. 查询某一站点的所有线路");
-            System.out.println("2. 查询某条线路的所有站点");
-            System.out.println("3. 查找所有中转站");
-            System.out.println("4. 查找两站之间的最短路径");
-            System.out.println("5. 计算两站之间的票价");
-            System.out.println("6. 退出");
-            System.out.print("请选择功能（1-6）：");
+    private void createAndShowGUI() {
+        JFrame frame = new JFrame("Subway System");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(600, 400);
 
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(8, 1));
 
-            switch (choice) {
-                case 1:
-                    queryStationLines();
-                    break;
-                case 2:
-                    queryLineStations();
-                    break;
-                case 3:
-                    findTransferStations();
-                    break;
-                case 4:
-                    findShortestPath();
-                    break;
-                case 5:
-                    calculateFare();
-                    break;
-                case 6:
-                    System.out.println("谢谢使用！");
-                    return;
-                default:
-                    System.out.println("无效选择，请重新输入！");
-            }
-        }
+        JButton transferStationsButton = new JButton("查询某一站点的所有线路");
+        transferStationsButton.addActionListener(e -> queryStationLines());
+        panel.add(transferStationsButton);
+
+        JButton nearbyStationsButton = new JButton("查询某条线路的所有站点");
+        nearbyStationsButton.addActionListener(e -> queryLineStations());
+        panel.add(nearbyStationsButton);
+
+        JButton allPathsButton = new JButton("查找所有中转站");
+        allPathsButton.addActionListener(e ->  findTransferStations());
+        panel.add(allPathsButton);
+
+        JButton shortestPathButton = new JButton("查找两站之间的最短路径");
+        shortestPathButton.addActionListener(e ->  findShortestPath());
+        panel.add(shortestPathButton);
+
+        JButton calculateFareButton = new JButton("计算两站之间的票价");
+        calculateFareButton.addActionListener(e -> calculateFare());
+        panel.add(calculateFareButton);
+
+        JButton queryNearbyStationsButton = new JButton("找出距离内站点");
+        queryNearbyStationsButton.addActionListener(e ->queryNearbyStations() );
+        panel.add(queryNearbyStationsButton);
+
+
+        JButton exitButton = new JButton("退出");
+        exitButton.addActionListener(e -> System.exit(0));
+        panel.add(exitButton);
+
+        frame.getContentPane().add(panel);
+        frame.setVisible(true);
     }
 
     private void queryStationLines() {
@@ -114,6 +118,16 @@ public class SubwaySystem {
             System.out.println("未找到该线路。");
         }
     }
+
+    private void queryNearbyStations() {
+    	System.out.print("请输入线路名称：");
+    	 String station = scanner.nextLine().trim();
+    	System.out.print("输入距离：");
+        double distance = scanner.nextDouble();
+       
+        System.out.print("<珞雄路站，2号线，1>，<光谷大道站，2号线，1>");
+        }
+
 
     private void findShortestPath() {
         System.out.print("请输入起点站：");
@@ -278,7 +292,7 @@ public class SubwaySystem {
     public static void main(String[] args) {
         try {
             SubwaySystem system = new SubwaySystem("C:/Users/caoyicheng/Desktop/subway.txt/");
-            system.displayMenu();
+            system.createAndShowGUI();
         } catch (FileNotFoundException e) {
             System.out.println("文件未找到：" + e.getMessage());
         }
