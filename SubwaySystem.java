@@ -173,11 +173,28 @@ public class SubwaySystem {
         for (int i = 0; i < path.size() - 1; i++) {
             totalDistance += graph.get(path.get(i)).get(path.get(i + 1));
         }
-
-        double fare = calculateFareFromDistance(totalDistance);
-        System.out.println("从 " + start + " 到 " + end + " 的票价为：" + fare + " 元");
+        System.out.print("请根据您的情况选择票价： 0：原价票；1：武汉通： 2：日票");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+        switch (choice) {
+        case 0:
+        	 double fare1 = calculateFareFromDistance(totalDistance);
+        	 System.out.println("从 " + start + " 到 " + end + " 的原价票价为：" + fare1 + " 元");
+            break;
+        case 1:
+        	 double fare2 =0.9* calculateFareFromDistance(totalDistance);
+        	 System.out.println("从 " + start + " 到 " + end + " 的武汉通票价为：" + fare2 + " 元");
+            break;
+        case 2:
+        	double fare3 =0;
+        	 System.out.println("从 " + start + " 到 " + end + " 的日票票价为：" + fare3 + " 元");
+            break;
+        default:
+            System.out.println("无效选择，请重新输入！");
     }
-
+       
+    
+}
     private void findTransferStations() {
         System.out.println("所有中转站：");
 
